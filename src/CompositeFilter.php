@@ -4,13 +4,18 @@ namespace vjik\valueFilter;
 
 use InvalidArgumentException;
 
-class ValueFilter
+class CompositeFilter extends BaseFilter
 {
+
+    /**
+     * @inheritDoc
+     */
+    public $skipOnEmpty = false;
 
     /**
      * @var BaseFilter[]
      */
-    protected $filters = [];
+    public $filters = [];
 
     /**
      * @return self
@@ -41,7 +46,7 @@ class ValueFilter
      * @param mixed $value
      * @return mixed
      */
-    public function apply($value)
+    protected function applyToValue($value)
     {
         foreach ($this->filters as $filter) {
             $value = $filter->apply($value);
