@@ -10,65 +10,65 @@ class BaseTest extends TestCase
 
     public function testNull()
     {
-        $this->assertNull(ValueFilter::make(null)->null()->result());
-        $this->assertNull(ValueFilter::make('')->null()->result());
-        $this->equalTo(ValueFilter::make(1)->null()->result(), 1);
-        $this->assertNull(ValueFilter::make(1)->null(1)->result());
-        $this->assertNull(ValueFilter::make(1)->null(0, 1)->result());
-        $this->assertNull(ValueFilter::make(1)->null([0, 1])->result());
-        $this->assertSame(ValueFilter::make('2')->null(2)->result(), '2');
+        $this->assertNull(ValueFilter::make(null)->maybeNull()->getValue());
+        $this->assertNull(ValueFilter::make('')->maybeNull()->getValue());
+        $this->equalTo(ValueFilter::make(1)->maybeNull()->getValue(), 1);
+        $this->assertNull(ValueFilter::make(1)->maybeNull(1)->getValue());
+        $this->assertNull(ValueFilter::make(1)->maybeNull(0, 1)->getValue());
+        $this->assertNull(ValueFilter::make(1)->maybeNull([0, 1])->getValue());
+        $this->assertSame(ValueFilter::make('2')->maybeNull(2)->getValue(), '2');
     }
 
     public function testInt()
     {
-        $this->assertSame(ValueFilter::make('1')->int(), 1);
-        $this->assertSame(ValueFilter::make(null)->int(), 0);
-        $this->assertSame(ValueFilter::make(null)->null()->int(), null);
+        $this->assertSame(ValueFilter::make('1')->getInt(), 1);
+        $this->assertSame(ValueFilter::make(null)->getInt(), 0);
+        $this->assertSame(ValueFilter::make(null)->maybeNull()->getInt(), null);
     }
 
     public function testFloat()
     {
-        $this->assertSame(ValueFilter::make('12.56')->float(), 12.56);
-        $this->assertSame(ValueFilter::make(12.56)->float(), 12.56);
-        $this->assertSame(ValueFilter::make('12,56')->float(), 12.56);
-        $this->assertSame(ValueFilter::make('1 112,56')->float(), 1112.56);
-        $this->assertSame(ValueFilter::make('1a1b1c2.12')->float(['a' => '', 'b' => '', 'c' => 3]), 11132.12);
-        $this->assertSame(ValueFilter::make(null)->float(), 0.0);
-        $this->assertSame(ValueFilter::make(null)->null()->float(), null);
+        $this->assertSame(ValueFilter::make('12.56')->getFloat(), 12.56);
+        $this->assertSame(ValueFilter::make(12.56)->getFloat(), 12.56);
+        $this->assertSame(ValueFilter::make('12,56')->getFloat(), 12.56);
+        $this->assertSame(ValueFilter::make('1 112,56')->getFloat(), 1112.56);
+        $this->assertSame(ValueFilter::make('1a1b1c2.12')->getFloat(['a' => '', 'b' => '', 'c' => 3]), 11132.12);
+        $this->assertSame(ValueFilter::make(null)->getFloat(), 0.0);
+        $this->assertSame(ValueFilter::make(null)->maybeNull()->getFloat(), null);
     }
 
     public function testString()
     {
-        $this->assertSame(ValueFilter::make('42')->string(), '42');
-        $this->assertSame(ValueFilter::make(42)->string(), '42');
-        $this->assertSame(ValueFilter::make('')->string(), '');
-        $this->assertSame(ValueFilter::make('')->null()->string(), null);
-        $this->assertSame(ValueFilter::make(null)->string(), '');
-        $this->assertSame(ValueFilter::make(null)->null()->string(), null);
+        $this->assertSame(ValueFilter::make('42')->getString(), '42');
+        $this->assertSame(ValueFilter::make(42)->getString(), '42');
+        $this->assertSame(ValueFilter::make('')->getString(), '');
+        $this->assertSame(ValueFilter::make('')->maybeNull()->getString(), null);
+        $this->assertSame(ValueFilter::make(null)->getString(), '');
+        $this->assertSame(ValueFilter::make(null)->maybeNull()->getString(), null);
     }
 
     public function testTrim()
     {
-        $this->assertSame(ValueFilter::make(' test ')->trim()->result(), 'test');
-        $this->assertSame(ValueFilter::make(42)->trim()->result(), '42');
-        $this->assertSame(ValueFilter::make(null)->trim()->result(), '');
-        $this->assertSame(ValueFilter::make(null)->null()->trim()->result(), null);
-        $this->assertSame(ValueFilter::make('')->trim()->result(), '');
-        $this->assertSame(ValueFilter::make('')->null()->trim()->result(), null);
-        $this->assertSame(ValueFilter::make('aba')->trim('a')->result(), 'b');
+        $this->assertSame(ValueFilter::make(' test ')->trim()->getValue(), 'test');
+        $this->assertSame(ValueFilter::make(42)->trim()->getValue(), '42');
+        $this->assertSame(ValueFilter::make(null)->trim()->getValue(), '');
+        $this->assertSame(ValueFilter::make(null)->maybeNull()->trim()->getValue(), null);
+        $this->assertSame(ValueFilter::make('')->trim()->getValue(), '');
+        $this->assertSame(ValueFilter::make('')->maybeNull()->trim()->getValue(), null);
+        $this->assertSame(ValueFilter::make('aba')->trim('a')->getValue(), 'b');
     }
 
     public function testBool()
     {
-        $this->assertSame(ValueFilter::make(true)->bool(), true);
-        $this->assertSame(ValueFilter::make(false)->bool(), false);
-        $this->assertSame(ValueFilter::make(1)->bool(), true);
-        $this->assertSame(ValueFilter::make(0)->bool(), false);
-        $this->assertSame(ValueFilter::make(0)->bool([0]), true);
-        $this->assertSame(ValueFilter::make(0)->bool(0), true);
-        $this->assertSame(ValueFilter::make(1)->bool(null, [1]), false);
-        $this->assertSame(ValueFilter::make(1)->bool(null, 1), false);
-        $this->assertSame(ValueFilter::make(null)->bool(null), true);
-        $this->assertSame(ValueFilter::make(1)->bool(null, 1), false);
+        $this->assertSame(ValueFilter::make(true)->getBool(), true);
+        $this->assertSame(ValueFilter::make(false)->getBool(), false);
+        $this->assertSame(ValueFilter::make(1)->getBool(), true);
+        $this->assertSame(ValueFilter::make(0)->getBool(), false);
+        $this->assertSame(ValueFilter::make(0)->getBool([0]), true);
+        $this->assertSame(ValueFilter::make(0)->getBool(0), true);
+        $this->assertSame(ValueFilter::make(1)->getBool(null, [1]), false);
+        $this->assertSame(ValueFilter::make(1)->getBool(null, 1), false);
+        $this->assertSame(ValueFilter::make(null)->getBool(null), true);
+        $this->assertSame(ValueFilter::make(1)->getBool(null, 1), false);
     }
 }

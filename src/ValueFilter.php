@@ -43,7 +43,7 @@ class ValueFilter
     /**
      * @return int|null
      */
-    public function int(): ?int
+    public function getInt(): ?int
     {
         $this->value = $this->isNull() ? null : (int)$this->value;
         return $this->value;
@@ -53,7 +53,7 @@ class ValueFilter
      * @param array|null $stringToFloatReplacePairs
      * @return float|null
      */
-    public function float(?array $stringToFloatReplacePairs = null): ?float
+    public function getFloat(?array $stringToFloatReplacePairs = null): ?float
     {
         if ($this->isNull()) {
             $this->value = null;
@@ -74,7 +74,7 @@ class ValueFilter
     /**
      * @return string|null
      */
-    public function string(): ?string
+    public function getString(): ?string
     {
         $this->value = $this->isNull() ? null : (string)$this->value;
         return $this->value;
@@ -83,7 +83,7 @@ class ValueFilter
     /**
      * @return bool|null
      */
-    public function bool(...$args): ?bool
+    public function getBool(...$args): ?bool
     {
         if ($this->isNull()) {
             $this->value = null;
@@ -130,16 +130,16 @@ class ValueFilter
     /**
      * @return mixed
      */
-    public function result()
+    public function getValue()
     {
-        $this->value = $this->current();
+        $this->value = $this->getCurrentValue();
         return $this->value;
     }
 
     /**
      * @return mixed
      */
-    protected function current()
+    protected function getCurrentValue()
     {
         return $this->isNull() ? null : $this->value;
     }
@@ -151,7 +151,7 @@ class ValueFilter
      */
     public function convert($from, $to): self
     {
-        $value = $this->current();
+        $value = $this->getCurrentValue();
         if (is_array($from)) {
             if (in_array($value, $from, true)) {
                 $this->value = $to;
@@ -166,7 +166,7 @@ class ValueFilter
      * @param mixed $nulls
      * @return self
      */
-    public function null(...$nulls): self
+    public function maybeNull(...$nulls): self
     {
         switch (count($nulls)) {
             case 0:
