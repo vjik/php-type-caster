@@ -1,0 +1,29 @@
+{
+    "name": "vjik/php-value-filter",
+    "description": "Helper for filtering values",
+    "version": "0.1",
+    "type": "library",
+    "keywords": [
+        "php",
+        "filter",
+        "validation"
+    ],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/vjik/php-value-filter/issues",
+        "source": "https://github.com/vjik/php-value-filter"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "vjik\\valueFilter\\": "src",
+            "vjik\\valueFilterTests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "require": {
+        "php": ">=7.2.0"
+    }
+}

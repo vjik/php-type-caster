@@ -1,0 +1,9 @@
+# PhpStorm project files
+.idea
+
+# Composer
+/vendor
+composer.lock
+
+# Tests
+/.phpunit.result.cache
