@@ -8,10 +8,7 @@ class FloatCaster extends BaseCaster
     /**
      * @var string[]|null
      */
-    public $stringReplacePairs = [
-        ' ' => '',
-        ',' => '.',
-    ];
+    public $stringReplacePairs = null;
 
     /**
      * @inheritDoc

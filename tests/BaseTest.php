@@ -43,12 +43,15 @@ class BaseTest extends TestCase
         $filter = (new CompositeCaster())->define(new FloatCaster());
         $this->assertSame($filter->apply('12.56'), 12.56);
         $this->assertSame($filter->apply(12.56), 12.56);
-        $this->assertSame($filter->apply('12,56'), 12.56);
-        $this->assertSame($filter->apply('1 112,56'), 1112.56);
 
-        $floatFilter = new FloatCaster(['stringReplacePairs' => ['a' => '', 'b' => '', 'c' => 3]]);
+        $floatFilter = new FloatCaster([
+            'stringReplacePairs' => [
+                ' ' => '',
+                ',' => '.',
+            ]
+        ]);
         $filter = (new CompositeCaster())->define($floatFilter);
-        $this->assertSame($filter->apply('1a1b1c2.12'), 11132.12);
+        $this->assertSame($filter->apply('1 112,56'), 1112.56);
 
         $filter = (new CompositeCaster())->define(new FloatCaster(['skipOnEmpty' => false]));
         $this->assertSame($filter->apply(null), 0.0);
