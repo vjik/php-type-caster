@@ -57,4 +57,22 @@ class TypeCasterTest extends TestCase
         $this->assertSame(TypeCaster::toFloatOrNull('', null, null), 0.0);
         $this->assertSame(TypeCaster::toFloatOrNull(null, null, null), null);
     }
+
+    public function testToBool()
+    {
+        $this->assertTrue(TypeCaster::toBool(true));
+        $this->assertTrue(TypeCaster::toBool(1));
+        $this->assertTrue(TypeCaster::toBool('on'));
+        $this->assertTrue(TypeCaster::toBool('yes'));
+        $this->assertTrue(TypeCaster::toBool('true'));
+        $this->assertFalse(TypeCaster::toBool(false));
+        $this->assertFalse(TypeCaster::toBool(0));
+        $this->assertFalse(TypeCaster::toBool('off'));
+        $this->assertFalse(TypeCaster::toBool('no'));
+        $this->assertFalse(TypeCaster::toBool('false'));
+        $this->assertFalse(TypeCaster::toBool(null));
+
+        $this->assertTrue(TypeCaster::toBool('okay', ['okay']));
+        $this->assertfalse(TypeCaster::toBool('bad', null, ['bad']));
+    }
 }

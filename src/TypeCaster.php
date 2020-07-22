@@ -2,6 +2,7 @@
 
 namespace vjik\typeCaster;
 
+use vjik\typeCaster\casters\BoolCaster;
 use vjik\typeCaster\casters\CompositeCaster;
 use vjik\typeCaster\casters\FloatCaster;
 use vjik\typeCaster\casters\IntCaster;
@@ -74,6 +75,26 @@ class TypeCaster
                 new NullCaster(['nullValues' => $nullValues]),
                 new FloatCaster(['stringReplacePairs' => $stringReplacePairs])
             );
+        }
+        return $casters[$hash]->apply($value);
+    }
+
+    /**
+     * @param $value
+     * @param array|null $trueValues
+     * @param array|null $falseValues
+     * @return bool
+     */
+    public static function toBool($value, ?array $trueValues = ['on', 'yes', 'true'], ?array $falseValues = ['off', 'no', 'false']): bool
+    {
+        static $casters;
+        $hash = md5(serialize($trueValues) . serialize($falseValues));
+        if (!isset($casters[$hash])) {
+            $casters[$hash] = new BoolCaster([
+                'skipOnEmpty' => false,
+                'trueValues' => $trueValues,
+                'falseValues' => $falseValues,
+            ]);
         }
         return $casters[$hash]->apply($value);
     }
