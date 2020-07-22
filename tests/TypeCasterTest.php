@@ -8,25 +8,25 @@ use vjik\typeCaster\TypeCaster;
 class TypeCasterTest extends TestCase
 {
 
-    public function testToNullOrInt()
+    public function testToIntOrNull()
     {
-        $this->assertNull(TypeCaster::toNullOrInt(null));
-        $this->assertNull(TypeCaster::toNullOrInt(''));
-        $this->assertSame(TypeCaster::toNullOrInt(1), 1);
-        $this->assertSame(TypeCaster::toNullOrInt('1'), 1);
+        $this->assertNull(TypeCaster::toIntOrNull(null));
+        $this->assertNull(TypeCaster::toIntOrNull(''));
+        $this->assertSame(TypeCaster::toIntOrNull(1), 1);
+        $this->assertSame(TypeCaster::toIntOrNull('1'), 1);
 
-        $this->assertNull(TypeCaster::toNullOrInt('1', ['1']));
-        $this->assertSame(TypeCaster::toNullOrInt('', null), 0);
+        $this->assertNull(TypeCaster::toIntOrNull('1', ['1']));
+        $this->assertSame(TypeCaster::toIntOrNull('', null), 0);
     }
 
-    public function testToNullOrString()
+    public function testToStringOrNull()
     {
-        $this->assertNull(TypeCaster::toNullOrString(null));
-        $this->assertNull(TypeCaster::toNullOrString(''));
-        $this->assertSame(TypeCaster::toNullOrString('1'), '1');
-        $this->assertSame(TypeCaster::toNullOrString(2), '2');
+        $this->assertNull(TypeCaster::toStringOrNull(null));
+        $this->assertNull(TypeCaster::toStringOrNull(''));
+        $this->assertSame(TypeCaster::toStringOrNull('1'), '1');
+        $this->assertSame(TypeCaster::toStringOrNull(2), '2');
 
-        $this->assertNull(TypeCaster::toNullOrString('1', ['1']));
-        $this->assertSame(TypeCaster::toNullOrString('', null), '');
+        $this->assertNull(TypeCaster::toStringOrNull('1', ['1']));
+        $this->assertSame(TypeCaster::toStringOrNull('', null), '');
     }
 }

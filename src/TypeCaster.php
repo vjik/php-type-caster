@@ -15,7 +15,7 @@ class TypeCaster
      * @param array|null $nullValues
      * @return int|null
      */
-    public static function toNullOrInt($value, ?array $nullValues = ['']): ?int
+    public static function toIntOrNull($value, ?array $nullValues = ['']): ?int
     {
         static $casters;
         $hash = md5(serialize($nullValues));
@@ -30,7 +30,7 @@ class TypeCaster
      * @param array|null $nullValues
      * @return string|null
      */
-    public static function toNullOrString($value, ?array $nullValues = ['']): ?string
+    public static function toStringOrNull($value, ?array $nullValues = ['']): ?string
     {
         static $casters;
         $hash = md5(serialize($nullValues));
