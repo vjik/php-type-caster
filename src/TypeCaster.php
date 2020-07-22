@@ -7,7 +7,7 @@ use vjik\typeCaster\casters\IntCaster;
 use vjik\typeCaster\casters\NullCaster;
 use vjik\typeCaster\casters\StringCaster;
 
-class ValueHelper
+class TypeCaster
 {
 
     /**
