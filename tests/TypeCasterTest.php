@@ -29,4 +29,20 @@ class TypeCasterTest extends TestCase
         $this->assertNull(TypeCaster::toStringOrNull('1', ['1']));
         $this->assertSame(TypeCaster::toStringOrNull('', null), '');
     }
+
+    public function testToFloatOrNull()
+    {
+        $this->assertNull(TypeCaster::toFloatOrNull(null));
+        $this->assertNull(TypeCaster::toFloatOrNull(''));
+        $this->assertSame(TypeCaster::toFloatOrNull(1.25), 1.25);
+        $this->assertSame(TypeCaster::toFloatOrNull('1.25'), 1.25);
+        $this->assertSame(TypeCaster::toFloatOrNull('1 542,21'), 1542.21);
+
+        $this->assertSame(TypeCaster::toFloatOrNull('1 542.21', null), 1.0);
+        $this->assertSame(TypeCaster::toFloatOrNull('xxx1542.21', ['x' => '']), 1542.21);
+
+        $this->assertNull(TypeCaster::toFloatOrNull('1.25', null, ['1.25']));
+        $this->assertSame(TypeCaster::toFloatOrNull('', null, null), 0.0);
+        $this->assertSame(TypeCaster::toFloatOrNull(null, null, null), null);
+    }
 }
