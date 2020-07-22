@@ -1,8 +1,8 @@
 <?php
 
-namespace vjik\valueFilter;
+namespace vjik\typeCaster;
 
-abstract class BaseFilter
+abstract class BaseCaster
 {
 
     /**

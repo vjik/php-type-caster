@@ -1,9 +1,9 @@
 <?php
 
-namespace vjik\valueFilterTests;
+namespace vjik\typeCasterTests;
 
 use PHPUnit\Framework\TestCase;
-use vjik\valueFilter\ValueHelper;
+use vjik\typeCaster\ValueHelper;
 
 class ValueHelperTest extends TestCase
 {

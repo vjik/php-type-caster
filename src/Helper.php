@@ -1,6 +1,6 @@
 <?php
 
-namespace vjik\valueFilter;
+namespace vjik\typeCaster;
 
 class Helper
 {

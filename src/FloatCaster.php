@@ -1,8 +1,8 @@
 <?php
 
-namespace vjik\valueFilter;
+namespace vjik\typeCaster;
 
-class FloatFilter extends BaseFilter
+class FloatCaster extends BaseCaster
 {
 
     /**

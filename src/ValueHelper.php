@@ -1,6 +1,6 @@
 <?php
 
-namespace vjik\valueFilter;
+namespace vjik\typeCaster;
 
 class ValueHelper
 {
@@ -13,7 +13,7 @@ class ValueHelper
     {
         static $filter;
         if ($filter === null) {
-            $filter = (new CompositeFilter())->define(new NullFilter(), new IntFilter());
+            $filter = (new CompositeCaster())->define(new NullCaster(), new IntCaster());
         }
         return $filter->apply($value);
     }
@@ -26,7 +26,7 @@ class ValueHelper
     {
         static $filter;
         if ($filter === null) {
-            $filter = (new CompositeFilter())->define(new NullFilter(), new StringFilter());
+            $filter = (new CompositeCaster())->define(new NullCaster(), new StringCaster());
         }
         return $filter->apply($value);
     }

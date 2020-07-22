@@ -1,10 +1,10 @@
 <?php
 
-namespace vjik\valueFilter;
+namespace vjik\typeCaster;
 
 use InvalidArgumentException;
 
-class CompositeFilter extends BaseFilter
+class CompositeCaster extends BaseCaster
 {
 
     /**
@@ -13,7 +13,7 @@ class CompositeFilter extends BaseFilter
     public $skipOnEmpty = false;
 
     /**
-     * @var BaseFilter[]
+     * @var BaseCaster[]
      */
     public $filters = [];
 
