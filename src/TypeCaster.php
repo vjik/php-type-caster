@@ -44,6 +44,24 @@ class TypeCaster
     /**
      * @param mixed $value
      * @param array|null $stringReplacePairs
+     * @return float
+     */
+    public static function toFloat($value, ?array $stringReplacePairs = [' ' => '', ',' => '.']): float
+    {
+        static $casters;
+        $hash = md5(serialize($stringReplacePairs));
+        if (!isset($casters[$hash])) {
+            $casters[$hash] = new FloatCaster([
+                'skipOnEmpty' => false,
+                'stringReplacePairs' => $stringReplacePairs,
+            ]);
+        }
+        return $casters[$hash]->apply($value);
+    }
+
+    /**
+     * @param mixed $value
+     * @param array|null $stringReplacePairs
      * @param array|null $nullValues
      * @return float|null
      */
