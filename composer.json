@@ -1,23 +1,24 @@
 {
-    "name": "vjik/php-value-filter",
-    "description": "Helper for filtering values",
+    "name": "vjik/php-type-caster",
+    "description": "Library for type casting",
     "version": "0.1",
     "type": "library",
     "keywords": [
         "php",
-        "filter",
-        "validation"
+        "type",
+        "caster",
+        "cast"
     ],
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/vjik/php-value-filter/issues",
-        "source": "https://github.com/vjik/php-value-filter"
+        "issues": "https://github.com/vjik/php-type-caster/issues",
+        "source": "https://github.com/vjik/php-type-caster"
     },
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "vjik\\valueFilter\\": "src",
-            "vjik\\valueFilterTests\\": "tests"
+            "vjik\\typeCaster\\": "src",
+            "vjik\\typeCasterTests\\": "tests"
         }
     },
     "require-dev": {
