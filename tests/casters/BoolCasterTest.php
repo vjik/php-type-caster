@@ -1,9 +1,9 @@
 <?php
 
-namespace vjik\typeCasterTests;
+namespace vjik\typeCasterTests\casters;
 
 use PHPUnit\Framework\TestCase;
-use vjik\typeCaster\BoolCaster;
+use vjik\typeCaster\casters\BoolCaster;
 
 class BoolCasterTest extends TestCase
 {

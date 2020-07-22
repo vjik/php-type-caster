@@ -1,6 +1,6 @@
 <?php
 
-namespace vjik\typeCaster;
+namespace vjik\typeCaster\casters;
 
 class IntCaster extends BaseCaster
 {

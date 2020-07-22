@@ -2,6 +2,11 @@
 
 namespace vjik\typeCaster;
 
+use vjik\typeCaster\casters\CompositeCaster;
+use vjik\typeCaster\casters\IntCaster;
+use vjik\typeCaster\casters\NullCaster;
+use vjik\typeCaster\casters\StringCaster;
+
 class ValueHelper
 {
 

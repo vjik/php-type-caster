@@ -1,9 +1,9 @@
 <?php
 
-namespace vjik\typeCasterTests;
+namespace vjik\typeCasterTests\casters;
 
 use PHPUnit\Framework\TestCase;
-use vjik\typeCaster\NullCaster;
+use vjik\typeCaster\casters\NullCaster;
 
 class NullCasterTest extends TestCase
 {

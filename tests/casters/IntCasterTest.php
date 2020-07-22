@@ -1,9 +1,9 @@
 <?php
 
-namespace vjik\typeCasterTests;
+namespace vjik\typeCasterTests\casters;
 
 use PHPUnit\Framework\TestCase;
-use vjik\typeCaster\IntCaster;
+use vjik\typeCaster\casters\IntCaster;
 
 class IntCasterTest extends TestCase
 {

@@ -1,6 +1,8 @@
 <?php
 
-namespace vjik\typeCaster;
+namespace vjik\typeCaster\casters;
+
+use vjik\typeCaster\Helper;
 
 abstract class BaseCaster
 {

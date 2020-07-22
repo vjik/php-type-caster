@@ -1,11 +1,11 @@
 <?php
 
-namespace vjik\typeCasterTests;
+namespace vjik\typeCasterTests\casters;
 
 use PHPUnit\Framework\TestCase;
-use vjik\typeCaster\CompositeCaster;
-use vjik\typeCaster\IntCaster;
-use vjik\typeCaster\NullCaster;
+use vjik\typeCaster\casters\CompositeCaster;
+use vjik\typeCaster\casters\IntCaster;
+use vjik\typeCaster\casters\NullCaster;
 
 class CompositeCasterTest extends TestCase
 {
