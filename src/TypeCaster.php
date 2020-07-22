@@ -12,27 +12,31 @@ class TypeCaster
 
     /**
      * @param mixed $value
+     * @param array|null $nullValues
      * @return int|null
      */
-    public static function toNullOrInt($value): ?int
+    public static function toNullOrInt($value, ?array $nullValues = ['']): ?int
     {
-        static $filter;
-        if ($filter === null) {
-            $filter = (new CompositeCaster())->define(new NullCaster(), new IntCaster());
+        static $casters;
+        $hash = md5(serialize($nullValues));
+        if (!isset($casters[$hash])) {
+            $casters[$hash] = (new CompositeCaster())->define(new NullCaster(['nullValues' => $nullValues]), new IntCaster());
         }
-        return $filter->apply($value);
+        return $casters[$hash]->apply($value);
     }
 
     /**
      * @param mixed $value
+     * @param array|null $nullValues
      * @return string|null
      */
-    public static function toNullOrString($value): ?string
+    public static function toNullOrString($value, ?array $nullValues = ['']): ?string
     {
-        static $filter;
-        if ($filter === null) {
-            $filter = (new CompositeCaster())->define(new NullCaster(), new StringCaster());
+        static $casters;
+        $hash = md5(serialize($nullValues));
+        if (!isset($casters[$hash])) {
+            $casters[$hash] = (new CompositeCaster())->define(new NullCaster(['nullValues' => $nullValues]), new StringCaster());
         }
-        return $filter->apply($value);
+        return $casters[$hash]->apply($value);
     }
 }

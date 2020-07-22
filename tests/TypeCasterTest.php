@@ -11,16 +11,22 @@ class TypeCasterTest extends TestCase
     public function testToNullOrInt()
     {
         $this->assertNull(TypeCaster::toNullOrInt(null));
-//        $this->assertNull(ValueHelper::toNullOrInt(''));
+        $this->assertNull(TypeCaster::toNullOrInt(''));
         $this->assertSame(TypeCaster::toNullOrInt(1), 1);
         $this->assertSame(TypeCaster::toNullOrInt('1'), 1);
+
+        $this->assertNull(TypeCaster::toNullOrInt('1', ['1']));
+        $this->assertSame(TypeCaster::toNullOrInt('', null), 0);
     }
 
     public function testToNullOrString()
     {
         $this->assertNull(TypeCaster::toNullOrString(null));
-//        $this->assertNull(ValueHelper::toNullOrString(''));
+        $this->assertNull(TypeCaster::toNullOrString(''));
         $this->assertSame(TypeCaster::toNullOrString('1'), '1');
         $this->assertSame(TypeCaster::toNullOrString(2), '2');
+
+        $this->assertNull(TypeCaster::toNullOrString('1', ['1']));
+        $this->assertSame(TypeCaster::toNullOrString('', null), '');
     }
 }
