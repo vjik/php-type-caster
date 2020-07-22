@@ -6,9 +6,9 @@ class NullCaster extends BaseCaster
 {
 
     /**
-     * @var array
+     * @var array|null
      */
-    public $nullValues = [null, ''];
+    public $nullValues = null;
 
     /**
      * @inheritDoc

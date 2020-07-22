@@ -17,12 +17,13 @@ class BaseTest extends TestCase
     {
         $filter = (new CompositeCaster())->define(new NullCaster());
         $this->assertNull($filter->apply(null));
-        $this->assertNull($filter->apply(''));
+        $this->assertSame($filter->apply(''), '');
         $this->assertSame($filter->apply(1), 1);
 
-        $nullFilter = new NullCaster(['nullValues' => [1, 2, 3]]);
+        $nullFilter = new NullCaster(['nullValues' => [1, 2, 3, '']]);
         $filter = (new CompositeCaster())->define($nullFilter);
         $this->assertNull($filter->apply(2));
+        $this->assertNull($filter->apply(''));
         $this->assertSame($filter->apply('2'), '2');
     }
 
@@ -56,7 +57,7 @@ class BaseTest extends TestCase
         $filter = (new CompositeCaster())->define(new FloatCaster(['skipOnEmpty' => false]));
         $this->assertSame($filter->apply(null), 0.0);
 
-        $filter = (new CompositeCaster())->define(new NullCaster(), new FloatCaster());
+        $filter = (new CompositeCaster())->define(new NullCaster(['nullValues' => ['']]), new FloatCaster());
         $this->assertNull($filter->apply(null));
     }
 
@@ -67,7 +68,7 @@ class BaseTest extends TestCase
         $this->assertSame($filter->apply(42), '42');
         $this->assertSame($filter->apply(''), '');
 
-        $filter = (new CompositeCaster())->define(new NullCaster(), new StringCaster());
+        $filter = (new CompositeCaster())->define(new NullCaster(['nullValues' => ['']]), new StringCaster());
         $this->assertNull($filter->apply(''));
     }
 
