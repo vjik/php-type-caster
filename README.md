@@ -1,4 +1,4 @@
-# Library for type casting
+# Type casting library
 
 ## Installation
 

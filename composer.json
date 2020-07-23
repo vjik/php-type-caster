@@ -1,6 +1,6 @@
 {
     "name": "vjik/php-type-caster",
-    "description": "Library for type casting",
+    "description": "Type casting library",
     "version": "0.1",
     "type": "library",
     "keywords": [
