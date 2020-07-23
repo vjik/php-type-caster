@@ -152,6 +152,24 @@ class TypeCaster
         return $this->getStringCaster()->forceApply($value);
     }
 
+    private $_boolOrNullCaster;
+
+    /**
+     * @param mixed $value
+     * @return bool|null
+     */
+    public function toBoolOrNull($value): ?bool
+    {
+        if ($this->_boolOrNullCaster === null) {
+            $this->_boolOrNullCaster = (new CompositeCaster())->define(
+                $this->getNullCaster(),
+                $this->getBoolCaster(),
+                $this->getNullCaster()
+            );
+        }
+        return $this->_boolOrNullCaster->apply($value);
+    }
+
     private $_intOrNullCaster;
 
     /**
@@ -181,7 +199,8 @@ class TypeCaster
         if ($this->_floatOrNullCaster === null) {
             $this->_floatOrNullCaster = (new CompositeCaster())->define(
                 $this->getNullCaster(),
-                $this->getFloatCaster()
+                $this->getFloatCaster(),
+                $this->getNullCaster()
             );
         }
         return $this->_floatOrNullCaster->apply($value);
@@ -198,7 +217,8 @@ class TypeCaster
         if ($this->_stringOrNullCaster === null) {
             $this->_stringOrNullCaster = (new CompositeCaster())->define(
                 $this->getNullCaster(),
-                $this->getStringCaster()
+                $this->getStringCaster(),
+                $this->getNullCaster()
             );
         }
         return $this->_stringOrNullCaster->apply($value);

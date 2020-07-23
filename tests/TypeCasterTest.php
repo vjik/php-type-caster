@@ -66,6 +66,18 @@ class TypeCasterTest extends TestCase
         $this->assertSame($this->caster->toString($object), 'hello');
     }
 
+    public function testToBoolOrNull()
+    {
+        $this->assertNull($this->caster->toBoolOrNull(null));
+        $this->assertNull($this->caster->toBoolOrNull(''));
+
+        $this->assertFalse($this->caster->toBoolOrNull(0));
+        $this->assertFalse($this->caster->toBoolOrNull('false'));
+
+        $this->assertTrue($this->caster->toBoolOrNull(1));
+        $this->assertTrue($this->caster->toBoolOrNull('on'));
+    }
+
     public function testToIntOrNull()
     {
         $this->assertNull($this->caster->toIntOrNull(null));
