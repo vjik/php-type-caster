@@ -143,6 +143,15 @@ class TypeCaster
         return $this->getFloatCaster()->forceApply($value);
     }
 
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    public function toString($value): string
+    {
+        return $this->getStringCaster()->forceApply($value);
+    }
+
     private $_intOrNullCaster;
 
     /**

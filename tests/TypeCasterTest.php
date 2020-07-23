@@ -48,6 +48,24 @@ class TypeCasterTest extends TestCase
         $this->assertSame($this->caster->toFloat('1 542,21'), 1542.21);
     }
 
+    public function testToString()
+    {
+        $this->assertSame($this->caster->toString(null), '');
+        $this->assertSame($this->caster->toString(42), '42');
+
+        $object = new class {
+        };
+        $this->assertSame($this->caster->toString($object), '');
+
+        $object = new class {
+            public function __toString()
+            {
+                return 'hello';
+            }
+        };
+        $this->assertSame($this->caster->toString($object), 'hello');
+    }
+
     public function testToIntOrNull()
     {
         $this->assertNull($this->caster->toIntOrNull(null));
