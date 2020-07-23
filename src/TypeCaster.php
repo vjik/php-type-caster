@@ -14,15 +14,19 @@ class TypeCaster
 
     /**
      * @param mixed $value
+     * @param array|null $stringReplacePairs
      * @param array|null $nullValues
      * @return int|null
      */
-    public static function toIntOrNull($value, ?array $nullValues = ['']): ?int
+    public static function toIntOrNull($value, ?array $stringReplacePairs = [' ' => ''], ?array $nullValues = ['']): ?int
     {
         static $casters;
-        $hash = md5(serialize($nullValues));
+        $hash = md5(serialize($stringReplacePairs) . serialize($nullValues));
         if (!isset($casters[$hash])) {
-            $casters[$hash] = (new CompositeCaster())->define(new NullCaster(['nullValues' => $nullValues]), new IntCaster());
+            $casters[$hash] = (new CompositeCaster())->define(
+                new NullCaster(['nullValues' => $nullValues]),
+                new IntCaster(['stringReplacePairs' => $stringReplacePairs])
+            );
         }
         return $casters[$hash]->apply($value);
     }
