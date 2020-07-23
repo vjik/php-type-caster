@@ -13,93 +13,176 @@ class TypeCaster
 {
 
     /**
-     * @param mixed $value
-     * @param array|null $stringReplacePairs
-     * @param array|null $nullValues
-     * @return int|null
+     * @var array
      */
-    public static function toIntOrNull($value, ?array $stringReplacePairs = [' ' => ''], ?array $nullValues = ['']): ?int
-    {
-        static $casters;
-        $hash = md5(serialize($stringReplacePairs) . serialize($nullValues));
-        if (!isset($casters[$hash])) {
-            $casters[$hash] = (new CompositeCaster())->define(
-                new NullCaster(['nullValues' => $nullValues]),
-                new IntCaster(['stringReplacePairs' => $stringReplacePairs])
-            );
-        }
-        return $casters[$hash]->apply($value);
-    }
+    public $configNull = [
+        'nullValues' => [''],
+    ];
 
     /**
-     * @param mixed $value
-     * @param array|null $nullValues
-     * @return string|null
+     * @var array
      */
-    public static function toStringOrNull($value, ?array $nullValues = ['']): ?string
-    {
-        static $casters;
-        $hash = md5(serialize($nullValues));
-        if (!isset($casters[$hash])) {
-            $casters[$hash] = (new CompositeCaster())->define(new NullCaster(['nullValues' => $nullValues]), new StringCaster());
-        }
-        return $casters[$hash]->apply($value);
-    }
+    public $configBool = [
+        'trueValues' => ['on', 'yes', 'true'],
+        'falseValues' => ['off', 'no', 'false'],
+    ];
 
     /**
-     * @param mixed $value
-     * @param array|null $stringReplacePairs
-     * @return float
+     * @var array
      */
-    public static function toFloat($value, ?array $stringReplacePairs = [' ' => '', ',' => '.']): float
-    {
-        static $casters;
-        $hash = md5(serialize($stringReplacePairs));
-        if (!isset($casters[$hash])) {
-            $casters[$hash] = new FloatCaster([
-                'skipOnEmpty' => false,
-                'stringReplacePairs' => $stringReplacePairs,
-            ]);
-        }
-        return $casters[$hash]->apply($value);
-    }
+    public $configInt = [
+        'stringReplacePairs' => [
+            ' ' => '',
+        ],
+    ];
 
     /**
-     * @param mixed $value
-     * @param array|null $stringReplacePairs
-     * @param array|null $nullValues
-     * @return float|null
+     * @var array
      */
-    public static function toFloatOrNull($value, ?array $stringReplacePairs = [' ' => '', ',' => '.'], ?array $nullValues = ['']): ?float
+    public $configFloat = [
+        'stringReplacePairs' => [
+            ' ' => '',
+            ',' => '.'
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    public $configString = [];
+
+    private $_nullCaster;
+
+    /**
+     * @return NullCaster
+     */
+    protected function getNullCaster(): NullCaster
     {
-        static $casters;
-        $hash = md5(serialize($stringReplacePairs) . serialize($nullValues));
-        if (!isset($casters[$hash])) {
-            $casters[$hash] = (new CompositeCaster())->define(
-                new NullCaster(['nullValues' => $nullValues]),
-                new FloatCaster(['stringReplacePairs' => $stringReplacePairs])
-            );
+        if ($this->_nullCaster === null) {
+            $this->_nullCaster = new NullCaster($this->configNull);
         }
-        return $casters[$hash]->apply($value);
+        return $this->_nullCaster;
+    }
+
+    private $_boolCaster;
+
+    /**
+     * @return BoolCaster
+     */
+    protected function getBoolCaster(): BoolCaster
+    {
+        if ($this->_boolCaster === null) {
+            $this->_boolCaster = new BoolCaster($this->configBool);
+        }
+        return $this->_boolCaster;
+    }
+
+    private $_intCaster;
+
+    /**
+     * @return IntCaster
+     */
+    protected function getIntCaster(): IntCaster
+    {
+        if ($this->_intCaster === null) {
+            $this->_intCaster = new IntCaster($this->configInt);
+        }
+        return $this->_intCaster;
+    }
+
+    private $_floatCaster;
+
+    /**
+     * @return FloatCaster
+     */
+    protected function getFloatCaster(): FloatCaster
+    {
+        if ($this->_floatCaster === null) {
+            $this->_floatCaster = new FloatCaster($this->configFloat);
+        }
+        return $this->_floatCaster;
+    }
+
+    private $_stringCaster;
+
+    /**
+     * @return StringCaster
+     */
+    protected function getStringCaster(): StringCaster
+    {
+        if ($this->_stringCaster === null) {
+            $this->_stringCaster = new StringCaster($this->configString);
+        }
+        return $this->_stringCaster;
     }
 
     /**
      * @param $value
-     * @param array|null $trueValues
-     * @param array|null $falseValues
      * @return bool
      */
-    public static function toBool($value, ?array $trueValues = ['on', 'yes', 'true'], ?array $falseValues = ['off', 'no', 'false']): bool
+    public function toBool($value): bool
     {
-        static $casters;
-        $hash = md5(serialize($trueValues) . serialize($falseValues));
-        if (!isset($casters[$hash])) {
-            $casters[$hash] = new BoolCaster([
-                'skipOnEmpty' => false,
-                'trueValues' => $trueValues,
-                'falseValues' => $falseValues,
-            ]);
+        return $this->getBoolCaster()->forceApply($value);
+    }
+
+    /**
+     * @param mixed $value
+     * @return float
+     */
+    public function toFloat($value): float
+    {
+        return $this->getFloatCaster()->forceApply($value);
+    }
+
+    private $_intOrNullCaster;
+
+    /**
+     * @param mixed $value
+     * @return int|null
+     */
+    public function toIntOrNull($value): ?int
+    {
+        if ($this->_intOrNullCaster === null) {
+            $this->_intOrNullCaster = (new CompositeCaster())->define(
+                $this->getNullCaster(),
+                $this->getIntCaster(),
+                $this->getNullCaster()
+            );
         }
-        return $casters[$hash]->apply($value);
+        return $this->_intOrNullCaster->apply($value);
+    }
+
+    private $_floatOrNullCaster;
+
+    /**
+     * @param mixed $value
+     * @return float|null
+     */
+    public function toFloatOrNull($value): ?float
+    {
+        if ($this->_floatOrNullCaster === null) {
+            $this->_floatOrNullCaster = (new CompositeCaster())->define(
+                $this->getNullCaster(),
+                $this->getFloatCaster()
+            );
+        }
+        return $this->_floatOrNullCaster->apply($value);
+    }
+
+    private $_stringOrNullCaster;
+
+    /**
+     * @param mixed $value
+     * @return string|null
+     */
+    public function toStringOrNull($value): ?string
+    {
+        if ($this->_stringOrNullCaster === null) {
+            $this->_stringOrNullCaster = (new CompositeCaster())->define(
+                $this->getNullCaster(),
+                $this->getStringCaster()
+            );
+        }
+        return $this->_stringOrNullCaster->apply($value);
     }
 }

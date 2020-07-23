@@ -35,6 +35,15 @@ abstract class BaseCaster
      * @param mixed $value
      * @return mixed
      */
+    public function forceApply($value)
+    {
+        return $this->applyToValue($value);
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
     abstract protected function applyToValue($value);
 
     /**
