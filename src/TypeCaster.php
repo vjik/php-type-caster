@@ -126,6 +126,15 @@ class TypeCaster
     }
 
     /**
+     * @param $value
+     * @return int
+     */
+    public function toInt($value): int
+    {
+        return $this->getIntCaster()->forceApply($value);
+    }
+
+    /**
      * @param mixed $value
      * @return float
      */

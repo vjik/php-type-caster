@@ -31,6 +31,14 @@ class TypeCasterTest extends TestCase
         $this->assertFalse($this->caster->toBool(null));
     }
 
+    public function testToInt()
+    {
+        $this->assertSame($this->caster->toInt(null), 0);
+        $this->assertSame($this->caster->toInt(''), 0);
+        $this->assertSame($this->caster->toInt(125), 125);
+        $this->assertSame($this->caster->toInt('1 500'), 1500);
+    }
+
     public function testToFloat()
     {
         $this->assertSame($this->caster->toFloat(null), 0.0);
