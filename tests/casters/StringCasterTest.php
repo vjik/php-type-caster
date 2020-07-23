@@ -15,6 +15,23 @@ class StringCasterTest extends TestCase
         $this->assertSame($caster->apply(42), '42');
     }
 
+    public function testObject()
+    {
+        $caster = new StringCaster();
+
+        $object = new class {
+        };
+        $this->assertSame($caster->apply($object), '');
+
+        $object = new class {
+            public function __toString()
+            {
+                return 'hello';
+            }
+        };
+        $this->assertSame($caster->apply($object), 'hello');
+    }
+
     public function testTrim()
     {
         $caster = new StringCaster(['useTrim' => true]);

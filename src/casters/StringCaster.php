@@ -20,7 +20,12 @@ class StringCaster extends BaseCaster
      */
     public function applyToValue($value)
     {
-        $value = (string)$value;
+        if (is_object($value) && !method_exists($value, '__toString')) {
+            $value = '';
+        }
+        if (!is_string($value)) {
+            $value = (string)$value;
+        }
         if ($this->useTrim) {
             $value = trim($value, $this->trimCharList);
         }
